@@ -1,47 +1,58 @@
-local altscreen_screengui = Instance.new("ScreenGui")
-local altscreen_frame = Instance.new("Frame")
-local altscreen_text = Instance.new("TextLabel")
+getgenv().IIlllIllII = {
+    isBusy = false
+}
+
+function unlockGamepasses()
+    game:GetService("Players").LocalPlayer.Gamepasses.Has2XRisk.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.HasTrident.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.HasBlowDryer.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.HasResearcher.Value = true
+end
+
+local SafePart = Instance.new("Part")
+    
+SafePart.Parent = Workspace
+SafePart.Name = "xxxmnvc"
+SafePart.Position = Vector3.new(-26.6815929, -2382.2605, 26.1416397)
+SafePart.Anchored = true
+SafePart.Transparency = 0
 
 
-function initializeAltScreen()
+function tpToSafePart()
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+        -26.6815929, -2379.2605, 26.1416397, 
+        0.999289989, 0.00411206204, -0.0374512412, 
+        -6.36438413e-09, 0.994026184, 0.10914167, 
+        0.037676312, -0.109064177, 0.993320465
+    )
+end
 
-    generatedChars = {}
+tpToSafePart()
 
-    for i=1,12 do
-        generatedChars[i] = string.char(math.random(32,126))
+-------------------------------
+-- Get imune of tsunamis
+coroutine.wrap(function()
+    while task.wait() do
+        for k, v in pairs(game:GetService("Workspace").ActiveTsunamis:GetChildren()) do
+            print("Tsunami detected")
+            v:Destroy()
+        end
     end
-
-    hiddenName = table.concat(generatedChars)
-
-    altscreen_screengui.Name = hiddenName
-    altscreen_screengui.Parent = game:GetService("CoreGui")
-
-    altscreen_frame.Name = hiddenName
-    altscreen_frame.Parent = game:GetService("CoreGui"):FindFirstChild(hiddenName)
-    altscreen_frame.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
-    altscreen_frame.BorderColor3 = Color3.fromRGB(12, 12, 12)
-    altscreen_frame.BorderSizePixel = 100
-    altscreen_frame.Position = UDim2.new(0, 1, 0, 1)
-    altscreen_frame.Size = UDim2.new(1, 0, 1, 0)
+end)()
 
 
-    altscreen_text.Name = hiddenName
-    altscreen_text.Parent = altscreen_frame
-    altscreen_text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    altscreen_text.BackgroundTransparency = 1.000
-    altscreen_text.Position = UDim2.new(0.43553561, 0, 0.460150361, 0)
-    altscreen_text.Size = UDim2.new(0, 200, 0, 50)
-    altscreen_text.Font = Enum.Font.GothamBold
-    altscreen_text.TextColor3 = Color3.fromRGB(255, 255, 255)
-    altscreen_text.TextSize = 18.000
-    altscreen_text.Text = "[ cx - v1 ]\n" .. game.Players.LocalPlayer.Name .. "\n  \ninitializing.."
-        
+--------------------------------
+-- Collect points
+
+while task.wait() do
+    for k, v in pairs(game:GetService("Workspace").CurrentPointCoins:GetChildren()) do
+        if v:IsA("Folder") and v.Name == "CoinFolder" then
+            print("Found Coinfolder")
+            firetouchinterest(
+                game:GetService("Players").LocalPlayer.Character.Head, 
+                game:GetService("Workspace").CurrentPointCoins.CoinFolder.CoinCollision, 
+                0
+            )
+        end
+    end
 end
-
-function updateAltScreenDescription(desc)
-    altscreen_text.Text = "[ cx - v1 ]\n" .. game.Players.LocalPlayer.Name .. "\n  \n" .. desc
-end
-
-initializeAltScreen()
-task.wait(4)
-updateAltScreenDescription("Good morning people")
